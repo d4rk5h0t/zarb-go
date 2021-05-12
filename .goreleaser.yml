@@ -1,11 +1,12 @@
 # This is an example .goreleaser.yml file with some sane defaults.
 # Make sure to check the documentation at http://goreleaser.com
+# https://webinstall.dev/goreleaser/
 project_name: zarb-cli
 
 before:
   hooks:
     - go mod tidy
-    - make bls_prebuilt
+    - make bls
 builds:
   - id: mac-x64
     main: ./cmd/zarb/

@@ -35,10 +35,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-      - name: Set OS Spesific env
-        id: set_os_env
+      - name: Install Cross Compilers
+        id: install_compilers
         run: |
-          curl -sS https://webinstall.dev/brew | bash
           brew install mingw-w64
           brew install FiloSottile/musl-cross/musl-cross
 

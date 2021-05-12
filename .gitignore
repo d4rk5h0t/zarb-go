@@ -6,9 +6,6 @@ vendor
 .bls
 .vscode
 todo
-local.mk
-*.local.md
+*local.*
 .herumi
 dist/
-.releaser.yml
-*.local.md
