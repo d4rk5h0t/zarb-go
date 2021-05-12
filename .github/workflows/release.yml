@@ -1,8 +1,10 @@
 name: releaser
 
+
 on:
-  create:
-      tags:
+  push:
+    tags:
+      - v*
 
 jobs:
   build:
