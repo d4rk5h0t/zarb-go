@@ -12,7 +12,7 @@ builds:
     env:
       - CGO_ENABLED=1
     ldflags:
-     - -s -w -X github.com/zarbchain/zarb-go/version.build={{.ShortCommit}} -X github.com/zarbchain/zarb-go/version.semVer={{.Version}} -extldflags "-static"
+     - -s -w -X github.com/zarbchain/zarb-go/version.build={{.ShortCommit}} -X github.com/zarbchain/zarb-go/version.semVer={{.Version}} -extldflags "-sectcreate __TEXT __info_plist Info.plist"
     goos:
       - darwin
     goarch:
