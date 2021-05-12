@@ -7,30 +7,40 @@ before:
     - go mod tidy
     - make bls_prebuilt
 builds:
-  - main: ./cmd/zarb/
+  - id: mac-x64
+    main: ./cmd/zarb/
     env:
       - CGO_ENABLED=1
-      - pwd = $(pwd)
-    # Custom ldflags templates.
-    # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
-    ldflags:
-     - -s -w -X github.com/zarbchain/zarb-go/version.build={{.ShortCommit}} -X github.com/zarbchain/zarb-go/version.semVer={{.Version}} -extldflags "-static"
-    # GOOS list to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are darwin and linux.
-    goos: 
-      - "${GOHOSTOS}"
-      # - darwin
-    # GOARCH to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are 386, amd64 and arm64.
+    goos:
+      - darwin
     goarch:
       - amd64
-      # - arm
-      # - arm64
-    # hooks:
-    #   pre:
-    #    - go env -w CGO_LDFLAGS="-L{{.Env.pwd}}/.herumi/bls/lib/{{.Os}}/{{.Arch}}/ -lbls384_256 -lm -lstdc++"
+
+  - id: linux-x64
+    main: ./cmd/zarb/
+    env:
+      - CGO_ENABLED=1
+      - CC=x86_64-linux-musl-gcc
+    flags:
+      - '-ldflags'
+      - '-extldflags "-static"'
+    goos:
+      - linux
+    goarch:
+      - amd64
+      
+  - id: windows-x64
+    main: ./cmd/zarb/
+    env:
+      - CGO_ENABLED=1
+      - CC=x86_64-w64-mingw32-gcc
+    flags:
+      - '-ldflags'
+      - '-extldflags "-static"'
+    goos:
+      - windows
+    goarch:
+      - amd64
 
 archives:
   - replacements:
@@ -43,7 +53,7 @@ archives:
       - goos: windows
         format: zip
 checksum:
-  name_template: 'checksums-${GOHOSTOS}.txt'
+  name_template: 'checksums.txt'
 snapshot:
   name_template: "{{ .Tag }}-{{.Os}}-zarb"
 changelog:

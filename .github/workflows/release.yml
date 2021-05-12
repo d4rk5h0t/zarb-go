@@ -8,14 +8,11 @@ on:
 
 jobs:
   build:
-    name: Build release on ${{ matrix.os }} with ${{ matrix.compiler }}.
-    runs-on: ${{ matrix.os }}
+    name: Build release
+    runs-on: macos-latest
     defaults:
       run:
         shell: bash
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       -
         name: Checkout
@@ -41,14 +38,16 @@ jobs:
       - name: Set OS Spesific env
         id: set_os_env
         run: |
-          GOHOSTOS=$(go env GOHOSTOS) envsubst < ".goreleaser.yml" > .releaser.yml
+          curl -sS https://webinstall.dev/brew | bash
+          brew install mingw-w64
+          brew install FiloSottile/musl-cross/musl-cross --with-aarch64 --with-arm # --with-mips --with-486
 
       -
         name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: release --rm-dist -f .releaser.yml
+          args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pwd: ${{ github.workspace }}
