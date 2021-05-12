@@ -1,8 +1,10 @@
 name: releaser
 
+
 on:
-  create:
-      tags:
+  push:
+    tags:
+      - v*
 
 jobs:
   build:
@@ -14,18 +16,6 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            compiler: gcc
-            target: Linux
-
-          - os: macos-latest
-            compiler: clang
-            target: Macos
-
-          - os: windows-latest
-            compiler: cl
-            target: Windows
     if: github.event_name == 'create' && github.event.ref_type == 'tag' && startsWith(github.event.ref, 'v')
     steps:
       -
