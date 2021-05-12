@@ -11,6 +11,8 @@ builds:
     main: ./cmd/zarb/
     env:
       - CGO_ENABLED=1
+        ldflags:
+     - -s -w -X github.com/zarbchain/zarb-go/version.build={{.ShortCommit}} -X github.com/zarbchain/zarb-go/version.semVer={{.Version}} -extldflags "-static"
     goos:
       - darwin
     goarch:
@@ -21,9 +23,8 @@ builds:
     env:
       - CGO_ENABLED=1
       - CC=x86_64-linux-musl-gcc
-    flags:
-      - '-ldflags'
-      - '-extldflags "-static"'
+    ldflags:
+     - -s -w -X github.com/zarbchain/zarb-go/version.build={{.ShortCommit}} -X github.com/zarbchain/zarb-go/version.semVer={{.Version}} -extldflags "-static"
     goos:
       - linux
     goarch:
@@ -34,9 +35,8 @@ builds:
     env:
       - CGO_ENABLED=1
       - CC=x86_64-w64-mingw32-gcc
-    flags:
-      - '-ldflags'
-      - '-extldflags "-static"'
+    ldflags:
+     - -s -w -X github.com/zarbchain/zarb-go/version.build={{.ShortCommit}} -X github.com/zarbchain/zarb-go/version.semVer={{.Version}} -extldflags "-static"
     goos:
       - windows
     goarch:
