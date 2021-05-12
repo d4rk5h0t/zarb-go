@@ -28,9 +28,9 @@ builds:
       - amd64
       # - arm
       # - arm64
-    hooks:
-      pre:
-       - go env -w CGO_LDFLAGS="-L{{.Env.pwd}}/.herumi/bls/lib/{{.Os}}/{{.Arch}}/ -lbls384_256 -lm -lstdc++"
+    # hooks:
+    #   pre:
+    #    - go env -w CGO_LDFLAGS="-L{{.Env.pwd}}/.herumi/bls/lib/{{.Os}}/{{.Arch}}/ -lbls384_256 -lm -lstdc++"
 
 archives:
   - replacements:
