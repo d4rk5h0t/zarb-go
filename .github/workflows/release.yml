@@ -40,7 +40,7 @@ jobs:
         run: |
           curl -sS https://webinstall.dev/brew | bash
           brew install mingw-w64
-          brew install FiloSottile/musl-cross/musl-cross --with-aarch64 --with-arm # --with-mips --with-486
+          brew install FiloSottile/musl-cross/musl-cross
 
       -
         name: Run GoReleaser
